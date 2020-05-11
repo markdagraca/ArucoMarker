@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+
+
+<script>
+    const address = 'http://192.168.43.51/';
+
+    function basicommand(direction) {
+        var request = new XMLHttpRequest()
+        request.open("GET", address + direction, true)
+        request.send()
+        console.log(direction)
+    }
+
+    function left() {
+        basicommand("left")
+    }
+
+    function right() {
+        basicommand("right")
+    }
+
+    function front() {
+        basicommand("front")
+    }
+
+    function back() {
+        basicommand("back")
+    }
+
+    function stop() {
+        basicommand("stop")
+    }
+    function joystick(x,y)
+    {
+        
+        const threshold=5;
+        x=Math.abs(x)<=threshold?0:x;
+        y=Math.abs(y)<=threshold?0:-y;
+        x=x/2;
+        y=y/2
+        var request = new XMLHttpRequest()
+       
+        request.open("GET", address + "joystick?x="+x+"&y="+y, true)
+        request.send()
+        console.log("x:"+x+" y:"+y)
+    }
+</script>
+
+
+
+
+
+
+<body>
+
+    <head>
+        <meta charset="utf-8">
+        <title>NippleJS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5">
+        <style>
+            html,
+            body {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+            #left {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                background: rgba(0, 0, 255, 0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="left"></div>
+        <div id="right"></div>
+        <script src="
+                https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+        <script>
+            var time = 0
+            var joystickL = nipplejs.create({
+                zone: document.getElementById('left'),
+                mode: 'static',
+                position: {
+                    left: '50%',
+                    top: '50%'
+                },
+                restJoystick:false,
+                color: 'blue',
+                size: 200
+            });
+            joystickL.on('move', function (evt, nipple) {
+                var d = new Date()
+                var newtime = d.getTime()
+                if (newtime - time > 100) {
+                    time = newtime;
+                    var x=(evt.target.nipples[0].frontPosition.x)
+                    var y=(evt.target.nipples[0].frontPosition.y);
+                    joystick(x,y)
+
+                }
+
+          
+            });
+        </script>
+    </body>
+
+    <button onclick="left()" on>left</button>
+    <button onclick="right()" on>right</button>
+    <button onclick="front()" on>foward</button>
+    <button onclick="back()" on>back</button>
+    <button onclick="stop()" on>stop</button>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "interface",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark Dagraca",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "nipplejs": "^0.8.5",
+    "requirejs": "^2.3.6"
+  }
+}
